@@ -12,4 +12,13 @@ namespace LibraryCardCatalog
         {
         }
     }
+
+    class Book
+        {
+        public Book(string title, string author)
+        {
+
+        }
+    }
+
 }
