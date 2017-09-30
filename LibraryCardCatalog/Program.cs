@@ -10,7 +10,12 @@ namespace LibraryCardCatalog
     {
         static void Main(string[] args)
         {
-            
+            List<Book> bookList = new List<Book>()
+            {
+             
+
+            };
+
             int numInput = PromptForNumber("Choose Option 1 to add a book.  " +
                 "\nChoose Option 2 to list all books. " +
                 "\nChoose Option 3 to save and exit");
@@ -22,7 +27,7 @@ namespace LibraryCardCatalog
                     Console.WriteLine("You chose option 1. Add Book.");
 
                     Console.WriteLine("Enter the book title: ");
-                    string bookTitle = Console.ReadLine();
+                    string title = Console.ReadLine();
 
                     Console.WriteLine("Enter the author: ");
                     string author = Console.ReadLine();
@@ -33,8 +38,8 @@ namespace LibraryCardCatalog
                     Console.WriteLine("Enter the publisher: ");
                     string publisher = Console.ReadLine();
 
-                    Book a = new Book(bookTitle, author, isbn, publisher);
-                    Console.WriteLine(bookTitle, author, isbn, publisher);
+                    //attempting to add a book to the list
+                    bookList.Add(new Book(title, author, isbn, publisher));
 
                     //return to menu
                     numInput = PromptForNumber("Choose Option 1 to add a book.  " +
@@ -46,6 +51,12 @@ namespace LibraryCardCatalog
                 {
                     //call the list book method
                     Console.WriteLine("You chose option 2");
+                    
+                    foreach (var books in bookList)
+                    {
+                        Console.WriteLine(books);
+                    }
+                    
                     Console.ReadLine();
 
                     //return to menu
@@ -84,10 +95,10 @@ namespace LibraryCardCatalog
     public class Book
     {
 
-        private string Title;
-        private string Author;
-        private string Isbn;
-        private string Publisher;
+        private string Title { get; set; }
+        private string Author { get; set; }
+        private string Isbn { get; set; }
+        private string Publisher { get; set; }
 
         public Book(string title, string author, string isbn, string publisher)
         {
@@ -99,13 +110,10 @@ namespace LibraryCardCatalog
 
         //add book - enter title, author, isbn and publisher
 
-        //public string addBook(string title, string author, string isbn, string publisher)
+        //public void addBook(string title, string author, string isbn, string publisher)
         //{
-        //    Title = title;
-        //    Author = author;
-        //    Isbn = isbn;
-        //    Publisher = publisher;
-            
+           
+
         //}
     }
 
@@ -126,7 +134,7 @@ namespace LibraryCardCatalog
 
         //  after each book, we should save
         //list book - retrieve the list of books and display them
-
+        
 
     }
 
