@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace LibraryCardCatalog
 {
@@ -15,13 +18,23 @@ namespace LibraryCardCatalog
 
 
             };
-
+            
             Console.WriteLine("Please Enter the Name of a File: ");
             string fileToUse = Console.ReadLine();
+
+            
+            Stream stream = File.Open("BookList.dat", FileMode.Open);
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bookList = (Book).bf.Deserialize(stream);
+            Stream.Close();
+
             // Here is where we will use File.IO to retrieve the appropriate Card Catalog File
             CardCatalog currentCardCatalog = new CardCatalog(fileToUse);
             //currentCardCatalog = /*whatever is retrieved from the functions with fileToUse. */
             Console.Clear();
+
+
             int checkForSaveAndExit = 0;
             while (checkForSaveAndExit != 3)
             {
@@ -77,10 +90,16 @@ namespace LibraryCardCatalog
                     }
                     else if (numInput == 3)
                     {
-                        //save and exit
-                        //to be removed later
-                        //currentCardCatalog.Save();
+                                             
                         Console.WriteLine("You chose option 3");
+                        //Serialize the object into a data file.
+                        Stream stream1 = File.Open("BookList.dat", FileMode.Create);
+                        BinaryFormatter bf1 = new BinaryFormatter();
+
+                        //Send the object to a data file.
+                        bf.Serialize(stream, bookList);
+                        stream.Close();
+
 
                         //exit
                         return;
@@ -108,6 +127,29 @@ namespace LibraryCardCatalog
             }
             
             return num;
+        }
+
+        private void SerializeBook()
+        {
+            //Serialize the object into a data file.
+            Stream stream = File.Open("BookList.dat", FileMode.Create);
+            BinaryFormatter bf = new BinaryFormatter();
+
+            //Send the object to a data file.
+            bf.Serialize(stream, Program.bookList);
+            stream.Close();
+        }
+
+        private void DeSerializeBook()
+        {
+            //Read object data from data file.
+            stream = File.Open("BookList.dat", FileMode.Open());
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bookList = (bookList).bf.Deserialize(stream);
+            Stream.Close();
+
+            
         }
     }
 }
