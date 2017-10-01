@@ -26,8 +26,8 @@ namespace LibraryCardCatalog
             Stream stream = File.Open("BookList.dat", FileMode.Open);
             BinaryFormatter bf = new BinaryFormatter();
 
-            bookList = (Book).bf.Deserialize(stream);
-            Stream.Close();
+            bookList = (List<Book>)bf.Deserialize(stream);
+            stream.Close();
 
             // Here is where we will use File.IO to retrieve the appropriate Card Catalog File
             CardCatalog currentCardCatalog = new CardCatalog(fileToUse);
