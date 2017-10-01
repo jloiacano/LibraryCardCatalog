@@ -16,23 +16,16 @@ namespace LibraryCardCatalog
 
         private List<Book> books = new List<Book>();
 
-        //TODO should be:
+        // should be:
         //public static string serializationFile = @"c:\temp\" + _filename + ".bin";
 
         // temporary til I figure out how to access _filename;
-        public static string serializationFile = @"c:\temp\" + "BOOKS.dat" + ".bin";
+        public static string serializationFile = @"c:\temp\" + "BOOKSDATA.dat" + ".bin";
 
         public CardCatalog(string filename)
         {
-            //open the file if one exists and deserialize it to books
+            SetFileName(filename);
 
-            using (Stream stream = File.Open(serializationFile, FileMode.Open))
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-
-                books = (List<Book>)bf.Deserialize(stream);
-            }
-            //TODO maybe? should check and prompt user if they want to create a new file if one does not exists
         }
 
         public void ListBooks()
@@ -48,6 +41,11 @@ namespace LibraryCardCatalog
         {
             // add book object to books
             books.Add(book);
+        }
+
+        public void SetFileName(string filename)
+        {
+            _filename = filename;
         }
 
         //public void Save()

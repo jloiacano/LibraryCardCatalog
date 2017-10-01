@@ -22,6 +22,7 @@ namespace LibraryCardCatalog
             Console.WriteLine("Please Enter the Name of a File: ");
             string fileToUse = Console.ReadLine();
 
+
             
             Stream stream = File.Open("BookList.dat", FileMode.Open);
             BinaryFormatter bf = new BinaryFormatter();
@@ -129,6 +130,7 @@ namespace LibraryCardCatalog
             return num;
         }
 
+        /*
         private void SerializeBook()
         {
             //Serialize the object into a data file.
@@ -151,5 +153,6 @@ namespace LibraryCardCatalog
 
             
         }
+        */
     }
 }
