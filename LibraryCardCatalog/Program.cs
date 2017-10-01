@@ -12,77 +12,96 @@ namespace LibraryCardCatalog
         {
             List<Book> bookList = new List<Book>()
             {
-             
+
 
             };
 
-            int numInput = PromptForNumber("Choose Option 1 to add a book.  " +
-                "\nChoose Option 2 to list all books. " +
-                "\nChoose Option 3 to save and exit");
-
-            while (numInput <= 3)
+            Console.WriteLine("Please Enter the Name of a File: ");
+            string fileToUse = Console.ReadLine();
+            // Here is where we will use File.IO to retrieve the appropriate Card Catalog File
+            CardCatalog currentCardCatalog = new CardCatalog(fileToUse);
+            //currentCardCatalog = /*whatever is retrieved from the functions with fileToUse. */
+            Console.Clear();
+            int checkForSaveAndExit = 0;
+            while (checkForSaveAndExit != 3)
             {
-                if (numInput == 1)
-                {
-                    Console.WriteLine("You chose option 1. Add Book.");
 
-                    Console.WriteLine("Enter the book title: ");
-                    string title = Console.ReadLine();
-
-                    Console.WriteLine("Enter the author: ");
-                    string author = Console.ReadLine();
-
-                    Console.WriteLine("Enter the ISBN: ");
-                    string isbn = Console.ReadLine();
-
-                    Console.WriteLine("Enter the publisher: ");
-                    string publisher = Console.ReadLine();
-
-                    //attempting to add a book to the list
-                    bookList.Add(new Book(title, author, isbn, publisher));
-
-                    //return to menu
-                    numInput = PromptForNumber("Choose Option 1 to add a book.  " +
+                int numInput = PromptForNumber("Choose Option 1 to add a book.  " +
                 "\nChoose Option 2 to list all books. " +
                 "\nChoose Option 3 to save and exit");
-                  
-                }
-                else if (numInput == 2)
+
+                while (numInput <= 3)
                 {
-                    //call the list book method
-                    Console.WriteLine("You chose option 2");
-                    
-                    foreach (var books in bookList)
+                    if (numInput == 1)
                     {
-                        Console.WriteLine(books);
+                        Console.WriteLine("You chose option 1. Add Book.");
+
+                        Console.WriteLine("Enter the book title: ");
+                        string title = Console.ReadLine();
+
+                        Console.WriteLine("Enter the author: ");
+                        string author = Console.ReadLine();
+
+                        Console.WriteLine("Enter the ISBN: ");
+                        string isbn = Console.ReadLine();
+
+                        Console.WriteLine("Enter the publisher: ");
+                        string publisher = Console.ReadLine();
+
+                        //attempting to add a book to the list
+
+                        bookList.Add(new Book(title, author, isbn, publisher));
+
+                        //return to menu
+                        numInput = PromptForNumber("Choose Option 1 to add a book.  " +
+                    "\nChoose Option 2 to list all books. " +
+                    "\nChoose Option 3 to save and exit");
+
                     }
-                    
-                    Console.ReadLine();
+                    else if (numInput == 2)
+                    {
+                        //call the list book method
+                        Console.WriteLine("You chose option 2");
 
-                    //return to menu
-                    numInput = PromptForNumber("Choose Option 1 to add a book.  " +
-                "\nChoose Option 2 to list all books. " +
-                "\nChoose Option 3 to save and exit");
-                }
-                else
-                {
-                    //save and exit
-                    //to be removed later
-                    Console.WriteLine("You chose option 3");
+                        foreach (var books in bookList)
+                        {
+                            Console.WriteLine(books);
+                        }
 
-                    //exit
-                    return;
-                    
-                }
+                        Console.ReadLine();
+
+                        //return to menu
+                        numInput = PromptForNumber("Choose Option 1 to add a book.  " +
+                    "\nChoose Option 2 to list all books. " +
+                    "\nChoose Option 3 to save and exit");
+                    }
+                    else if (numInput == 3)
+                    {
+                        //save and exit
+                        //to be removed later
+                        //currentCardCatalog.Save();
+                        Console.WriteLine("You chose option 3");
+
+                        //exit
+                        return;
+
+                    }
+                    else //if (numInput < 1 || numInput > 3 || numInput is string)
+                    {
+                        Console.WriteLine("That was not a valid entry.  Please enter a number between 1 and 3.");
+                        numInput = PromptForNumber("Choose Option 1 to add a book.  " +
+                    "\nChoose Option 2 to list all books. " +
+                    "\nChoose Option 3 to save and exit");
+                    }
+                } Console.WriteLine("That was not a valid entry.  Please enter a number between 1 and 3.");
             }
         }
-
         private static int PromptForNumber(string promptString = "Enter a number: ")
         {
             int num = 0;
             string input = "";
 
-            while (!int.TryParse(input, out num) || (Convert.ToInt32(input) > 3))
+            while (!int.TryParse(input, out num))
             {
                 Console.WriteLine(promptString);
                 input = Console.ReadLine();
@@ -91,52 +110,4 @@ namespace LibraryCardCatalog
             return num;
         }
     }
-
-    public class Book
-    {
-
-        private string Title { get; set; }
-        private string Author { get; set; }
-        private string Isbn { get; set; }
-        private string Publisher { get; set; }
-
-        public Book(string title, string author, string isbn, string publisher)
-        {
-            Title = title;
-            Author = author;
-            Isbn = isbn;
-            Publisher = publisher;
-        }
-
-        //add book - enter title, author, isbn and publisher
-
-        //public void addBook(string title, string author, string isbn, string publisher)
-        //{
-           
-
-        //}
-    }
-
-    public class CardCatalog
-    {
-        private string _filename;
-        private string Title;
-        private string Author;
-        private string Isbn;
-        private string Publisher;
-
-        public CardCatalog(string fileName)
-        {
-
-        }
-
-        List<Book> myBooks = new List<Book>();
-
-        //  after each book, we should save
-        //list book - retrieve the list of books and display them
-        
-
-    }
-
-
 }
