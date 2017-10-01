@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace LibraryCardCatalog
 {
@@ -13,18 +16,22 @@ namespace LibraryCardCatalog
 
         private List<Book> books = new List<Book>();
 
+        //TODO should be:
         //public static string serializationFile = @"c:\temp\" + _filename + ".bin";
+
+        // temporary til I figure out how to access _filename;
+        public static string serializationFile = @"c:\temp\" + "BOOKS.dat" + ".bin";
 
         public CardCatalog(string filename)
         {
             //open the file if one exists and deserialize it to books
 
-            //using (Stream stream = File.Open(serializationFile, FileMode.Open))
-            //{
-            //    BinaryFormatter bf = new BinaryFormatter();
+            using (Stream stream = File.Open(serializationFile, FileMode.Open))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
 
-            //    books = (List<Book>)bf.Deserialize(stream);
-            //}
+                books = (List<Book>)bf.Deserialize(stream);
+            }
             //TODO maybe? should check and prompt user if they want to create a new file if one does not exists
         }
 
