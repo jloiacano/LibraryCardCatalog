@@ -15,16 +15,24 @@ namespace LibraryCardCatalog
         private string _filename;
 
         private List<Book> books = new List<Book>();
-
-        // should be:
-        //public static string serializationFile = @"c:\temp\" + _filename + ".bin";
-
-        // temporary til I figure out how to access _filename;
-        public static string serializationFile = @"c:\temp\" + "BOOKSDATA.dat" + ".bin";
-
+       
         public CardCatalog(string filename)
         {
             _filename = @"c:\temp\" + filename + ".dat";
+
+            if (File.Exists(_filename))
+            {
+                using (Stream stream = File.Open(_filename, FileMode.Open))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+
+                    books = (List<Book>)bf.Deserialize(stream);
+                }
+            }
+            else
+            {
+                File.Create(_filename);
+            }
 
 
         }
