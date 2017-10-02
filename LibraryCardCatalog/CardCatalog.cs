@@ -43,16 +43,19 @@ namespace LibraryCardCatalog
         public void ListBooks()
         {
             // foreach loop of all the books in List using .toString()
+            Console.Clear();
             foreach (var book in books)
             {
                 Console.WriteLine(book.ToString());
             }
+            Console.WriteLine("\n\n");
         }
 
         public void AddBook()
         {
             // add book object to books
             Book book = new Book();
+            Console.Clear();
             Console.WriteLine("Please enter the title of the book: ");
             book.Title = Console.ReadLine();
 

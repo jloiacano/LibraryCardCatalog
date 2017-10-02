@@ -33,7 +33,7 @@ namespace LibraryCardCatalog
 
         public override string ToString()
         {
-            return string.Format("{0} by {1}, Copywrite: {2}, ISBN:{3}", Title, Author, Publisher, ISBN);
+            return string.Format("{0} by {1}; Copywrite: {2}; ISBN: {3}", Title, Author, Publisher, ISBN);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
