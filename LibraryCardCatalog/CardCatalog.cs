@@ -90,18 +90,20 @@ namespace LibraryCardCatalog
             Book book = new Book();
             Console.Clear();
             Console.WriteLine("Please enter the title of the book: ");
-            while (Console.ReadLine() == "")
+            book.Title = Console.ReadLine();
+            while (book.Title == "")
             {
                 Console.WriteLine("This field cannot be left empty. Please enter a valid title: ");
+                book.Title = Console.ReadLine();
             }
-            book.Title = Console.ReadLine();
            
             Console.WriteLine("Please enter the author of the book: ");
-            while (Console.ReadLine() == "")
+            book.Author = Console.ReadLine();
+            while (book.Author == "")
             {
                 Console.WriteLine("This field cannot be left empty. Please enter the author's name: ");
+                book.Author = Console.ReadLine();
             }
-            book.Author = Console.ReadLine();
 
             Console.WriteLine("Please enter the ISBN of the book: ");
             book.ISBN = Console.ReadLine();
