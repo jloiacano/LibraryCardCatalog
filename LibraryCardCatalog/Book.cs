@@ -34,7 +34,22 @@ namespace LibraryCardCatalog
         public override string ToString()
         {
             // could use some tab formatting maybe or something to line up columns better?
+            if (this.ISBN == "" && this.Publisher == "")
+            {
+                return string.Format("{0} by {1}", Title, Author);
+            }
+            else if (this.ISBN == "")
+            {
+                return string.Format("{0} by {1}; Copywrite: {2}", Title, Author, Publisher);
+            }
+            else if (this.Publisher == "")
+            {
+                return string.Format("{0} by {1}; ISBN: {2}", Title, Author, ISBN);
+            }
+            else
+            {
             return string.Format("{0} by {1}; Copywrite: {2}; ISBN: {3}", Title, Author, Publisher, ISBN);
+            }
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
