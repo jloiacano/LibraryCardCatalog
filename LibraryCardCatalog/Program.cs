@@ -19,139 +19,47 @@ namespace LibraryCardCatalog
             string fileToUse = Console.ReadLine();
 
             CardCatalog currentCardCatalog = new CardCatalog(fileToUse);
-
-            /*
-            Stream stream = File.Open("BookList.dat", FileMode.Open);
-            BinaryFormatter bf = new BinaryFormatter();
-
-            bookList = (List<Book>)bf.Deserialize(stream);
-            stream.Close();
-            */
-
+            
             Console.Clear();
+            
+            bool stillGoing = true;
 
-
-            int checkForSaveAndExit = 0;
-            while (checkForSaveAndExit != 3)
+            while (stillGoing == true)
             {
-
-                int numInput = PromptForNumber("Choose Option 1 to add a book.  " +
-                "\nChoose Option 2 to list all books. " +
-                "\nChoose Option 3 to save and exit");
-
-                while (numInput <= 3)
+                Console.WriteLine("CHOOSE AN OPTION 1 - 3\n\n1. List All books\n2. Add A Book\n3. Save and Exit");
+                int userInput = MakeItTheRightInt(Console.ReadKey(true).KeyChar.ToString());
+                switch (userInput)
                 {
-                    if (numInput == 1)
-                    {
-                        Console.WriteLine("You chose option 1. Add Book.");
-
-                        Console.WriteLine("Enter the book title: ");
-                        string title = Console.ReadLine();
-
-                        Console.WriteLine("Enter the author: ");
-                        string author = Console.ReadLine();
-
-                        Console.WriteLine("Enter the ISBN: ");
-                        string isbn = Console.ReadLine();
-
-                        Console.WriteLine("Enter the publisher: ");
-                        string publisher = Console.ReadLine();
-
-                        //attempting to add a book to the list
-                        Book aNewBook = new Book(title, author, isbn, publisher);
-                        currentCardCatalog.AddBook(aNewBook);
-
-                        //bookList.Add(new Book(title, author, isbn, publisher));
-
-                        //return to menu
-                        numInput = PromptForNumber("Choose Option 1 to add a book.  " +
-                    "\nChoose Option 2 to list all books. " +
-                    "\nChoose Option 3 to save and exit");
-
-                    }
-                    else if (numInput == 2)
-                    {
-                        //call the list book method
-                        Console.WriteLine("You chose option 2");
-
-                        foreach (var books in bookList)
-                        {
-                            Console.WriteLine(books);
-                        }
-
-                        Console.ReadLine();
-
-                        //return to menu
-                        numInput = PromptForNumber("Choose Option 1 to add a book.  " +
-                    "\nChoose Option 2 to list all books. " +
-                    "\nChoose Option 3 to save and exit");
-                    }
-                    else if (numInput == 3)
-                    {
-                                             
-                        Console.WriteLine("You chose option 3");
-
-                        /*
-                        //Serialize the object into a data file.
-                        Stream stream1 = File.Open("BookList.dat", FileMode.Create);
-                        BinaryFormatter bf1 = new BinaryFormatter();
-
-                        //Send the object to a data file.
-                        bf.Serialize(stream, bookList);
-                        stream.Close();
-                        */
-
-                        //exit
-                        return;
-
-                    }
-                    else //if (numInput < 1 || numInput > 3 || numInput is string)
-                    {
-                        Console.WriteLine("That was not a valid entry.  Please enter a number between 1 and 3.");
-                        numInput = PromptForNumber("Choose Option 1 to add a book.  " +
-                    "\nChoose Option 2 to list all books. " +
-                    "\nChoose Option 3 to save and exit");
-                    }
-                } Console.WriteLine("That was not a valid entry.  Please enter a number between 1 and 3.");
+                    case 1:
+                        currentCardCatalog.ListBooks();
+                        break;
+                    case 2:
+                        currentCardCatalog.AddBook();
+                        break;
+                    case 3:
+                        currentCardCatalog.Save();
+                        stillGoing = false;
+                        break;
+                    default:
+                        break;
+                }
             }
+            
         }
-        private static int PromptForNumber(string promptString = "Enter a number: ")
-        {
-            int num = 0;
-            string input = "";
 
-            while (!int.TryParse(input, out num))
+        private static int MakeItTheRightInt(string maybeAnInt)
+        {
+            int number;
+            bool result = int.TryParse(maybeAnInt, out number);
+            while (!result || number < 1 || number > 3)
             {
-                Console.WriteLine(promptString);
-                input = Console.ReadLine();
+                Console.WriteLine("\n{0} is not a valid entry. Please enter a number between 1 and 3: ", number);
+                string userInput = Console.ReadKey(true).KeyChar.ToString();
+                result = int.TryParse(userInput, out number);
             }
-            
-            return num;
+            return number;
         }
 
-        /*
-        private void SerializeBook()
-        {
-            //Serialize the object into a data file.
-            Stream stream = File.Open("BookList.dat", FileMode.Create);
-            BinaryFormatter bf = new BinaryFormatter();
 
-            //Send the object to a data file.
-            bf.Serialize(stream, Program.bookList);
-            stream.Close();
-        }
-
-        private void DeSerializeBook()
-        {
-            //Read object data from data file.
-            stream = File.Open("BookList.dat", FileMode.Open());
-            BinaryFormatter bf = new BinaryFormatter();
-
-            bookList = (bookList).bf.Deserialize(stream);
-            Stream.Close();
-
-            
-        }
-        */
     }
 }

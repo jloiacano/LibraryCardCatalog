@@ -46,9 +46,22 @@ namespace LibraryCardCatalog
             }
         }
 
-        public void AddBook(Book book)
+        public void AddBook()
         {
             // add book object to books
+            Book book = new Book();
+            Console.WriteLine("Please enter the title of the book: ");
+            book.Title = Console.ReadLine();
+
+            Console.WriteLine("Please enter the author of the book: ");
+            book.Author = Console.ReadLine();
+
+            Console.WriteLine("Please enter the ISBN of the book: ");
+            book.ISBN = Console.ReadLine();
+
+            Console.WriteLine("Please enter the publisher of the book: ");
+            book.Publisher = Console.ReadLine();
+
             books.Add(book);
         }
         
