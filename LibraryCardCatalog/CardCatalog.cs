@@ -20,13 +20,38 @@ namespace LibraryCardCatalog
         {
             if (!Directory.Exists(@"c:\temp\cardCatalog\"))
             {
+                try
+                {
                 Directory.CreateDirectory(@"c:\temp\cardCatalog\");
+                }
+                catch (DirectoryNotFoundException)
+                {
+
+                    Console.WriteLine("That directory seems to have been deleted. Please re-enter a file name to recreate" +
+                        "the directory.");
+
+                }
             }
 
             _filename = @"c:\temp\cardCatalog\" + filename + ".dat";
 
             if (File.Exists(_filename))
             {
+                try
+                {
+                    using (Stream stream = File.Open(_filename, FileMode.Open))
+                    {
+                        BinaryFormatter bf = new BinaryFormatter();
+                        books = (List<Book>)bf.Deserialize(stream);
+                        stream.Close();
+                    }
+
+                }
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("That file no longer exists. Please re-enter the file name to recreate" +
+                        "or enter a new file name to create a new card catalog.");
+                }
                 using (Stream stream = File.Open(_filename, FileMode.Open))
                 {
                     BinaryFormatter bf = new BinaryFormatter();
