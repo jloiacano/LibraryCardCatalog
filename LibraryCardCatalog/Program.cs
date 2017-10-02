@@ -12,9 +12,7 @@ namespace LibraryCardCatalog
     class Program
     {
         static void Main(string[] args)
-        {
-            List<Book> bookList = new List<Book>();
-            
+        {            
             Console.WriteLine("Please Enter the Name of a File: ");
             string fileToUse = Console.ReadLine();
 

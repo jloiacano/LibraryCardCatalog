@@ -18,7 +18,12 @@ namespace LibraryCardCatalog
        
         public CardCatalog(string filename)
         {
-            _filename = @"c:\temp\" + filename + ".dat";
+            if (!Directory.Exists(@"c:\temp\cardCatalog\"))
+            {
+                Directory.CreateDirectory(@"c:\temp\cardCatalog\");
+            }
+
+            _filename = @"c:\temp\cardCatalog\" + filename + ".dat";
 
             if (File.Exists(_filename))
             {
@@ -31,10 +36,8 @@ namespace LibraryCardCatalog
             }
             else
             {
-                File.Create(_filename);
+                using (Stream stream = File.Create(_filename, 32)){}
             }
-
-
         }
 
         public void ListBooks()
@@ -63,6 +66,7 @@ namespace LibraryCardCatalog
             book.Publisher = Console.ReadLine();
 
             books.Add(book);
+            Console.Clear();
         }
         
 
@@ -74,7 +78,6 @@ namespace LibraryCardCatalog
                 var bf = new BinaryFormatter();
                 bf.Serialize(stream, books);
             }
-            //TODO set up exiting the program
 
         }
     }
