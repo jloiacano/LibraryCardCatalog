@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace LibraryCardCatalog
 {
@@ -11,14 +12,14 @@ namespace LibraryCardCatalog
         private string _filename;
 
         private List<Book> books = new List<Book>();
-       
+
         public CardCatalog(string filename)
         {
             if (!Directory.Exists(@"c:\temp\cardCatalog\"))
             {
                 try
                 {
-                Directory.CreateDirectory(@"c:\temp\cardCatalog\");
+                    Directory.CreateDirectory(@"c:\temp\cardCatalog\");
                 }
                 catch (DirectoryNotFoundException)
                 {
@@ -37,8 +38,13 @@ namespace LibraryCardCatalog
                 {
                     using (Stream stream = File.Open(_filename, FileMode.Open))
                     {
-                        BinaryFormatter bf = new BinaryFormatter();
-                        books = (List<Book>)bf.Deserialize(stream);
+                        //BinaryFormatter bf = new BinaryFormatter();
+                        //books = (List<Book>)bf.Deserialize(stream);
+
+                        //XMLserialization way...
+                        XmlSerializer xmls = new XmlSerializer(typeof(List<Book>));
+                        books = (List<Book>)xmls.Deserialize(stream);
+
                         stream.Close();
                         stream.Dispose();
                     }
@@ -51,8 +57,13 @@ namespace LibraryCardCatalog
                 }
                 using (Stream stream = File.Open(_filename, FileMode.Open))
                 {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    books = (List<Book>)bf.Deserialize(stream);
+                    //BinaryFormatter bf = new BinaryFormatter();
+                    //books = (List<Book>)bf.Deserialize(stream);
+
+
+                    XmlSerializer xmls = new XmlSerializer(typeof(List<Book>));
+                    books = (List<Book>)xmls.Deserialize(stream);
+
                     stream.Close();
                     stream.Dispose();
                 }
@@ -61,7 +72,7 @@ namespace LibraryCardCatalog
             {
                 try
                 {
-                using (Stream stream = File.Create(_filename, 32)){}
+                    using (Stream stream = File.Create(_filename, 32)) { }
                 }
                 catch (DirectoryNotFoundException)
                 {
@@ -94,7 +105,7 @@ namespace LibraryCardCatalog
                 Console.WriteLine("This field cannot be left empty. Please enter a valid title: ");
                 book.Title = Console.ReadLine();
             }
-           
+
             Console.WriteLine("Please enter the author of the book: ");
             book.Author = Console.ReadLine();
             while (book.Author == "")
@@ -113,19 +124,23 @@ namespace LibraryCardCatalog
             Console.Clear();
         }
 
-        
-        
+
+
 
         public void Save()
         {
             // serialize the List of Books and save them and exit the program.
             try
             {
-            using (Stream stream = File.Open(_filename, FileMode.Create))
-            {
-                var bf = new BinaryFormatter();
-                bf.Serialize(stream, books);
-            }
+                using (Stream stream = File.Open(_filename, FileMode.Create))
+                {
+                    //var bf = new BinaryFormatter();
+                    //bf.Serialize(stream, books);
+
+                    XmlSerializer xmls = new XmlSerializer(typeof(List<Book>));
+                    xmls.Serialize(stream, books);
+
+                }
 
             }
             catch (FileNotFoundException)
