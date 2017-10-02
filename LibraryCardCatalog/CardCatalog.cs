@@ -61,7 +61,15 @@ namespace LibraryCardCatalog
             }
             else
             {
+                try
+                {
                 using (Stream stream = File.Create(_filename, 32)){}
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    Console.WriteLine("That file path seems to have been altered. " +
+                        "Please try again. Sorry for the inconvenience.");
+                }
             }
         }
 
@@ -101,10 +109,19 @@ namespace LibraryCardCatalog
         public void Save()
         {
             // serialize the List of Books and save them and exit the program.
+            try
+            {
             using (Stream stream = File.Open(_filename, FileMode.Create))
             {
                 var bf = new BinaryFormatter();
                 bf.Serialize(stream, books);
+            }
+
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("That file seems to have been moved, misplaced, or deleted." +
+                    "Sorry for the inconvenience. Please try again.");
             }
 
         }
