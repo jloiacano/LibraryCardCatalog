@@ -40,6 +40,7 @@ namespace LibraryCardCatalog
                         BinaryFormatter bf = new BinaryFormatter();
                         books = (List<Book>)bf.Deserialize(stream);
                         stream.Close();
+                        stream.Dispose();
                     }
 
                 }
@@ -53,6 +54,7 @@ namespace LibraryCardCatalog
                     BinaryFormatter bf = new BinaryFormatter();
                     books = (List<Book>)bf.Deserialize(stream);
                     stream.Close();
+                    stream.Dispose();
                 }
             }
             else
