@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -30,55 +31,15 @@ namespace LibraryCardCatalog
                 }
             }
 
-            _filename = @"c:\temp\cardCatalog\" + filename + ".dat";
+            _filename = @"c:\temp\cardCatalog\" + filename + ".json";
 
             if (File.Exists(_filename))
             {
-                try
-                {
-                    using (Stream stream = File.Open(_filename, FileMode.Open))
-                    {
-                        //BinaryFormatter bf = new BinaryFormatter();
-                        //books = (List<Book>)bf.Deserialize(stream);
-
-                        //XMLserialization way...
-                        XmlSerializer xmls = new XmlSerializer(typeof(List<Book>));
-                        books = (List<Book>)xmls.Deserialize(stream);
-
-                        stream.Close();
-                        stream.Dispose();
-                    }
-
-                }
-                catch (FileNotFoundException)
-                {
-                    Console.WriteLine("That file no longer exists. Please re-enter the file name to recreate" +
-                        "or enter a new file name to create a new card catalog.");
-                }
-                using (Stream stream = File.Open(_filename, FileMode.Open))
-                {
-                    //BinaryFormatter bf = new BinaryFormatter();
-                    //books = (List<Book>)bf.Deserialize(stream);
-
-
-                    XmlSerializer xmls = new XmlSerializer(typeof(List<Book>));
-                    books = (List<Book>)xmls.Deserialize(stream);
-
-                    stream.Close();
-                    stream.Dispose();
-                }
+                        books = JsonConvert.DeserializeObject<List<Book>>(File.ReadAllText(_filename));
             }
             else
             {
-                try
-                {
-                    using (Stream stream = File.Create(_filename, 32)) { }
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    Console.WriteLine("That file path seems to have been altered. " +
-                        "Please try again. Sorry for the inconvenience.");
-                }
+                books = new List<Book>();
             }
         }
 
@@ -129,26 +90,7 @@ namespace LibraryCardCatalog
 
         public void Save()
         {
-            // serialize the List of Books and save them and exit the program.
-            try
-            {
-                using (Stream stream = File.Open(_filename, FileMode.Create))
-                {
-                    //var bf = new BinaryFormatter();
-                    //bf.Serialize(stream, books);
-
-                    XmlSerializer xmls = new XmlSerializer(typeof(List<Book>));
-                    xmls.Serialize(stream, books);
-
-                }
-
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("That file seems to have been moved, misplaced, or deleted." +
-                    "Sorry for the inconvenience. Please try again.");
-            }
-
+            File.WriteAllText(_filename, JsonConvert.SerializeObject(books));
         }
     }
 }
