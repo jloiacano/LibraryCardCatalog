@@ -24,7 +24,8 @@ namespace LibraryCardCatalog
 
         public CardCatalog(string filename)
         {
-            SetFileName(filename);
+            _filename = @"c:\temp\" + filename + ".dat";
+
 
         }
 
@@ -42,11 +43,7 @@ namespace LibraryCardCatalog
             // add book object to books
             books.Add(book);
         }
-
-        public void SetFileName(string filename)
-        {
-            _filename = filename;
-        }
+        
 
         //public void Save()
         //{
