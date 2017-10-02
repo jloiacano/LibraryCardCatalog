@@ -13,26 +13,21 @@ namespace LibraryCardCatalog
     {
         static void Main(string[] args)
         {
-            List<Book> bookList = new List<Book>()
-            {
-
-
-            };
+            List<Book> bookList = new List<Book>();
             
             Console.WriteLine("Please Enter the Name of a File: ");
             string fileToUse = Console.ReadLine();
 
+            CardCatalog currentCardCatalog = new CardCatalog(fileToUse);
 
-            
+            /*
             Stream stream = File.Open("BookList.dat", FileMode.Open);
             BinaryFormatter bf = new BinaryFormatter();
 
             bookList = (List<Book>)bf.Deserialize(stream);
             stream.Close();
+            */
 
-            // Here is where we will use File.IO to retrieve the appropriate Card Catalog File
-            CardCatalog currentCardCatalog = new CardCatalog(fileToUse);
-            //currentCardCatalog = /*whatever is retrieved from the functions with fileToUse. */
             Console.Clear();
 
 
@@ -63,8 +58,10 @@ namespace LibraryCardCatalog
                         string publisher = Console.ReadLine();
 
                         //attempting to add a book to the list
+                        Book aNewBook = new Book(title, author, isbn, publisher);
+                        currentCardCatalog.AddBook(aNewBook);
 
-                        bookList.Add(new Book(title, author, isbn, publisher));
+                        //bookList.Add(new Book(title, author, isbn, publisher));
 
                         //return to menu
                         numInput = PromptForNumber("Choose Option 1 to add a book.  " +
@@ -93,6 +90,8 @@ namespace LibraryCardCatalog
                     {
                                              
                         Console.WriteLine("You chose option 3");
+
+                        /*
                         //Serialize the object into a data file.
                         Stream stream1 = File.Open("BookList.dat", FileMode.Create);
                         BinaryFormatter bf1 = new BinaryFormatter();
@@ -100,7 +99,7 @@ namespace LibraryCardCatalog
                         //Send the object to a data file.
                         bf.Serialize(stream, bookList);
                         stream.Close();
-
+                        */
 
                         //exit
                         return;

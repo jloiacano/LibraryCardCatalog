@@ -25,8 +25,8 @@ namespace LibraryCardCatalog
                 using (Stream stream = File.Open(_filename, FileMode.Open))
                 {
                     BinaryFormatter bf = new BinaryFormatter();
-
                     books = (List<Book>)bf.Deserialize(stream);
+                    stream.Close();
                 }
             }
             else
@@ -53,17 +53,17 @@ namespace LibraryCardCatalog
         }
         
 
-        //public void Save()
-        //{
-        //    // serialize the List of Books and save them and exit the program.
-        //    using (Stream stream = File.Open(serializationFile, FileMode.Create))
-        //    {
-        //        var bf = new BinaryFormatter();
-        //        bf.Serialize(stream, books);
-        //    }
-        //    //TODO set up exiting the program
+        public void Save()
+        {
+            // serialize the List of Books and save them and exit the program.
+            using (Stream stream = File.Open(_filename, FileMode.Create))
+            {
+                var bf = new BinaryFormatter();
+                bf.Serialize(stream, books);
+            }
+            //TODO set up exiting the program
 
-        //}
+        }
     }
 }
 
