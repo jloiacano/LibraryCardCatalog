@@ -48,7 +48,7 @@ namespace LibraryCardCatalog
             {
                 Console.WriteLine(book.ToString());
             }
-            Console.WriteLine("\n\n");
+            Console.WriteLine("\n");
         }
 
         public void AddBook()

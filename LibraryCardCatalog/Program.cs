@@ -24,7 +24,7 @@ namespace LibraryCardCatalog
 
             while (stillGoing == true)
             {
-                Console.WriteLine("CHOOSE AN OPTION 1 - 3\n\n1. List All books\n2. Add A Book\n3. Save and Exit");
+                Console.WriteLine("CHOOSE AN OPTION 1 - 3 for {0}\n\n1. List All books\n2. Add A Book\n3. Save and Exit", fileToUse);
                 int userInput = MakeItTheRightInt(Console.ReadKey(true).KeyChar.ToString());
                 switch (userInput)
                 {

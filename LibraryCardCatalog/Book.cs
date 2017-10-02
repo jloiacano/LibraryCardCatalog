@@ -33,6 +33,7 @@ namespace LibraryCardCatalog
 
         public override string ToString()
         {
+            // could use some tab formatting maybe or something to line up columns better?
             return string.Format("{0} by {1}; Copywrite: {2}; ISBN: {3}", Title, Author, Publisher, ISBN);
         }
 
